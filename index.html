@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Portfolio website of Alvin Valeryan, an International Relations student, cultural program leader, and visual communication enthusiast based in Depok, Indonesia." />
   <title>Alvin Valeryan | Portfolio</title>
-  <link rel="stylesheet" href="./styles.css?v=11" />
+  <link rel="stylesheet" href="./styles.css?v=13" />
 </head>
 <body>
   <header class="site-header">
@@ -22,6 +22,7 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#design-works">Design Works</a></li>
+        <li><a href="#presentation-deck">Deck Design</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -305,6 +306,68 @@
       </div>
     </section>
 
+
+    <section class="section deck-section" id="presentation-deck">
+      <div class="container">
+        <div class="section-heading deck-heading">
+          <p class="eyebrow">Presentation Deck</p>
+          <h2>Big Meeting deck design</h2>
+          <p class="section-description wide-description">
+            A Canva presentation deck created for the first big meeting of the PUNICO 2025 Comparative Study project. This public preview uses anonymized role labels and selected slides to show the visual direction without exposing member names.
+          </p>
+        </div>
+
+        <div class="deck-showcase">
+          <article class="deck-info" aria-label="Presentation deck project details">
+            <span class="project-label">Event Deck · Canva Presentation</span>
+            <h3>Comparative Study PUNICO 2025</h3>
+            <p>
+              A clean meeting deck built to introduce the project structure, core team roles, tagline, and Q&amp;A flow for a cross-campus cultural collaboration.
+            </p>
+            <ul class="deck-details">
+              <li><strong>Role:</strong> Project Manager and deck creator</li>
+              <li><strong>Tool:</strong> Canva</li>
+              <li><strong>Focus:</strong> Presentation flow, hierarchy, and event identity</li>
+              <li><strong>Privacy:</strong> Public-safe preview with personal names removed</li>
+            </ul>
+          </article>
+
+          <div class="deck-viewer" aria-label="Big Meeting presentation slide viewer">
+            <div class="deck-frame">
+              <img id="deck-slide" src="assets/presentation-deck/big-meeting-01-cover.png" alt="Big Meeting deck slide 1: cover slide" loading="lazy" />
+            </div>
+
+            <div class="deck-controls" aria-label="Slide controls">
+              <button class="deck-button" type="button" data-deck-prev aria-label="Previous slide">←</button>
+              <span class="deck-counter" aria-live="polite">Slide <strong id="deck-current">1</strong> / <span id="deck-total">6</span></span>
+              <button class="deck-button" type="button" data-deck-next aria-label="Next slide">→</button>
+            </div>
+
+            <div class="deck-thumbs" aria-label="Slide thumbnails">
+              <button class="deck-thumb is-active" type="button" data-deck-thumb="0" aria-label="Go to slide 1">
+                <img src="assets/presentation-deck/big-meeting-01-cover.png" alt="Cover slide thumbnail" loading="lazy" />
+              </button>
+              <button class="deck-thumb" type="button" data-deck-thumb="1" aria-label="Go to slide 2">
+                <img src="assets/presentation-deck/big-meeting-02-introduction.png" alt="Introduction slide thumbnail" loading="lazy" />
+              </button>
+              <button class="deck-thumb" type="button" data-deck-thumb="2" aria-label="Go to slide 3">
+                <img src="assets/presentation-deck/big-meeting-03-team-roles.png" alt="Team roles slide thumbnail" loading="lazy" />
+              </button>
+              <button class="deck-thumb" type="button" data-deck-thumb="3" aria-label="Go to slide 4">
+                <img src="assets/presentation-deck/big-meeting-04-tagline.png" alt="Tagline slide thumbnail" loading="lazy" />
+              </button>
+              <button class="deck-thumb" type="button" data-deck-thumb="4" aria-label="Go to slide 5">
+                <img src="assets/presentation-deck/big-meeting-05-qna.png" alt="Q and A slide thumbnail" loading="lazy" />
+              </button>
+              <button class="deck-thumb" type="button" data-deck-thumb="5" aria-label="Go to slide 6">
+                <img src="assets/presentation-deck/big-meeting-06-thank-you.png" alt="Thank you slide thumbnail" loading="lazy" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section split-section" id="skills">
       <div class="container skills-grid">
         <div>
@@ -483,8 +546,66 @@
 
     window.addEventListener('pageshow', closeMenu);
 
+
+    const deckSlides = [
+      {
+        src: 'assets/presentation-deck/big-meeting-01-cover.png',
+        alt: 'Big Meeting deck slide 1: cover slide'
+      },
+      {
+        src: 'assets/presentation-deck/big-meeting-02-introduction.png',
+        alt: 'Big Meeting deck slide 2: introduction slide with anonymized Vice Project Manager label'
+      },
+      {
+        src: 'assets/presentation-deck/big-meeting-03-team-roles.png',
+        alt: 'Big Meeting deck slide 3: anonymized people in charge roles'
+      },
+      {
+        src: 'assets/presentation-deck/big-meeting-04-tagline.png',
+        alt: 'Big Meeting deck slide 4: event tagline'
+      },
+      {
+        src: 'assets/presentation-deck/big-meeting-05-qna.png',
+        alt: 'Big Meeting deck slide 5: Q and A slide'
+      },
+      {
+        src: 'assets/presentation-deck/big-meeting-06-thank-you.png',
+        alt: 'Big Meeting deck slide 6: thank you slide'
+      }
+    ];
+
+    const deckSlideImage = document.querySelector('#deck-slide');
+    const deckCurrent = document.querySelector('#deck-current');
+    const deckTotal = document.querySelector('#deck-total');
+    const deckPrev = document.querySelector('[data-deck-prev]');
+    const deckNext = document.querySelector('[data-deck-next]');
+    const deckThumbs = document.querySelectorAll('[data-deck-thumb]');
+    let activeDeckSlide = 0;
+
+    function updateDeckSlide(index) {
+      if (!deckSlideImage || !deckSlides.length) return;
+      activeDeckSlide = (index + deckSlides.length) % deckSlides.length;
+      const selectedSlide = deckSlides[activeDeckSlide];
+      deckSlideImage.src = selectedSlide.src;
+      deckSlideImage.alt = selectedSlide.alt;
+      if (deckCurrent) deckCurrent.textContent = String(activeDeckSlide + 1);
+      deckThumbs.forEach((thumb, thumbIndex) => {
+        const isActive = thumbIndex === activeDeckSlide;
+        thumb.classList.toggle('is-active', isActive);
+        thumb.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    }
+
+    if (deckTotal) deckTotal.textContent = String(deckSlides.length);
+    deckPrev?.addEventListener('click', () => updateDeckSlide(activeDeckSlide - 1));
+    deckNext?.addEventListener('click', () => updateDeckSlide(activeDeckSlide + 1));
+    deckThumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => updateDeckSlide(Number(thumb.dataset.deckThumb || 0)));
+    });
+    updateDeckSlide(0);
+
     const revealTargets = document.querySelectorAll(
-      '.section-heading, .hero-copy, .hero-card, .content-block, .strength-grid article, .timeline-item, .project-card, .visual-card, .skill-panel, .achievement-list article, .contact-grid > *'
+      '.section-heading, .hero-copy, .hero-card, .content-block, .strength-grid article, .timeline-item, .project-card, .visual-card, .deck-showcase, .deck-info, .deck-frame, .deck-thumb, .skill-panel, .achievement-list article, .contact-grid > *'
     );
 
     revealTargets.forEach((element, index) => {
